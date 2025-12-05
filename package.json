@@ -1,0 +1,19 @@
+{
+  "name": "qupay",
+  "version": "1.0.0",
+  "description": "A full-stack digital payment application with secure transactions, user authentication, and real-time processing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebDclassified/qupay.git"
+  },
+  "author": "Prabhat Teotia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebDclassified/qupay/issues"
+  },
+  "homepage": "https://github.com/WebDclassified/qupay#readme"
+}
