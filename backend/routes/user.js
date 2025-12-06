@@ -1,6 +1,7 @@
 const zod = require("zod")
 const { User } = require("../db")
 const { JWT_SECRET } = require("../config")
+const { authMiddleware } = require("../middleware")
 
 const router = express.Router()
 
@@ -11,10 +12,7 @@ const signupBody = zod.object({
     password: zod.string()
 })
 
-const signinBody = zod.object({
-    username: zod.email(),
-    password: zod.string()
-})
+
 
 router.post("/signup", async (req ,res) => {
     const { success } =signupBody.safeParse(req.body)
@@ -53,6 +51,11 @@ router.post("/signup", async (req ,res) => {
     })
 })
 
+const signinBody = zod.object({
+    username: zod.email(),
+    password: zod.string()
+})
+
 router.post("/signin", async (req,res) => {
     const { success } = signinBody.safeParse(req.body)
     if(!success){
@@ -79,5 +82,30 @@ router.post("/signin", async (req,res) => {
     })
 })
 
+
+
+const updateBody = zod.object({
+    password: zod.string(),
+    firstName: zod.string(),
+    lastName: zod.string()
+})
+
+router.put("/", authMiddleware, async (req,res) => {
+    const { success } = updateBody.safeParse(req.body)
+    if(!success){
+        return res.status(411).json({
+            msg: "Error while updating details"
+        })
+    } 
+    await User.updateOne({_id.req.userId}, req.body)
+
+    res.json({
+        msg: "Updated successfully"
+    })
+})
+
+router.get("/bulk", async (req, res) => {
+    
+})
 
 module.exports = router
