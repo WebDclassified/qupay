@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+# mongodb+srv://qupay_dbadmin:qupaydbpassword@cluster0.4o9mdvr.mongodb.net/
 
 # Editor directories and files
 .vscode/*
