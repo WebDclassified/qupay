@@ -59,7 +59,7 @@ router.post("/signup", async (req ,res) => {
 })
 
 const signinBody = zod.object({
-    username: zod.email(),
+    username: zod.string().email(),
     password: zod.string()
 })
 
@@ -104,8 +104,11 @@ router.put("/", authMiddleware, async (req,res) => {
             msg: "Error while updating details"
         })
     } 
-    await User.updateOne(req.body, {
-        id: req.userId
+
+    await User.updateOne({
+        _id: req.userId
+    },{
+        $set: req.body
     })
 
     res.json({
