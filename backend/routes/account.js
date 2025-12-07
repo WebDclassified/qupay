@@ -4,7 +4,7 @@ const { Account } = require("../db")
 
 const router  = express.Router()
 
-router.get("/balance", authMiddleware, async ( res, req) => {
+router.get("/balance", authMiddleware, async ( req, res) => {
     const account = await Account.findOne({
         userId: req.userId
     })
@@ -14,49 +14,39 @@ router.get("/balance", authMiddleware, async ( res, req) => {
     })
 })
 
-router.post("/transfer", authMiddleware, async( res, req) => {
-    const { amount, id} = req.body
+router.post("/transfer", authMiddleware, async ( req, res) => {
+    const session = await mongoose.startSession()
 
-    const account = await Account.findOne({
-        user: req.userId
-    })
+    session.startTransaction()
+    const { amount , to} = req.body
 
-    if( account.balance < amount) {
+    const account = await Account.findOne({userId: req.userId}).session(session)
+
+    if(!account || account.balance < amount){
+        await session.abortTransaction()
         return res.status(400).json({
-            msg: "Insufficient balance"
+            msg: "Insuffienct balance or Invalid account"
         })
     }
 
-    const toAccount = await Account.findOne({
-        userId: to
-    })
+    const toAccount = await Account.findOne({userId: to}).session(session)
 
-    if (!toAccount) {
+    if(!toAccount){
+        await session.abortTransaction();
         return res.status(400).json({
             msg: "Invalid account"
         })
     }
 
-    await Account.updateOne({
-        userId: req.userId
-    }, {
-        $inc: {
-            balance: -amount
-        }
-    })
+    await Account.updateOne({userId: req.userId}, {$inc: { balance: -amount}}).session(session)
+    await Account.updateOne({userId: to}, { $inc: { balance: amount}}).session(session)
 
-    await Account.updateOne({
-        userId: to
-    }, {
-        $inc: {
-            balance: amount
-        }
-    })
-    
+    await session.commitTransaction()
     res.json({
-        msg: "Funds transfer successful"
+        msg: "Funds Transfer successful"
     })
-    
 })
+
+
 
 module.exports = router
