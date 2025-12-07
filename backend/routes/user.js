@@ -1,5 +1,5 @@
 const zod = require("zod")
-const { User } = require("../db")
+const { User, Account } = require("../db")
 const { JWT_SECRET } = require("../config")
 const { authMiddleware } = require("../middleware")
 
@@ -40,6 +40,11 @@ router.post("/signup", async (req ,res) => {
         lastName: req.body.lastName,
     })
     const userId = user._id;
+
+    await Account.create({
+        userId,
+        balance: 1 + Math.random()*10000
+    })
 
     const token = jwt.sign({
         userId
@@ -97,7 +102,9 @@ router.put("/", authMiddleware, async (req,res) => {
             msg: "Error while updating details"
         })
     } 
-    await User.updateOne({_id.req.userId}, req.body)
+    await User.updateOne(req.body, {
+        id: req.userId
+    })
 
     res.json({
         msg: "Updated successfully"
@@ -105,7 +112,32 @@ router.put("/", authMiddleware, async (req,res) => {
 })
 
 router.get("/bulk", async (req, res) => {
-    
+    const filter = req.query.filter || ""
+
+    const users = await User.find({
+        $or: [{
+            firstName: {
+                "$regex": filter
+            }
+        }, {
+            lastName: {
+                "$regex": filter
+            }
+        }]
+    })
+    res.json({
+        user: users.map(user => ({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
+    })
 })
+
+// router.post("/signup", async( req, res) => {
+//     const { success } = signupBody.safeParse(req.body)
+//     if()
+// })
 
 module.exports = router
