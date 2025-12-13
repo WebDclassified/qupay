@@ -5,14 +5,14 @@ import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const Signup = () => {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const navigate = useNavigate()
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div className="bg-slate-300 h-screen flex justify-center">
@@ -20,29 +20,50 @@ export const Signup = () => {
         <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
           <Heading label={"Sign up"} />
           <SubHeading label={"Enter your information to create an account"} />
-          <InputBox onChange={e => {
-            setFirstName(e.target.value)
-          }} label={"First Name"} placeholder={"Prabhat"} />
-          <InputBox onChange={(e) => {
-            setLastName(e.target.value)
-          }} label={"Last Name"} placeholder={"Teotia"} />
-          <InputBox onChange= {(e) => {
-            setUsername(e.target.value)
-          }} label={"Email"} placeholder={"prabhat@gmail.com"} />
-          <InputBox onChange = {(e) => {
-            setPassword(e.target.value)
-          }} label={"Password"} placeholder={"123456789"} />
+          <InputBox
+            onChange={(value) => 
+              setFirstName(value)
+            }
+            label={"First Name"}
+            placeholder={"Prabhat"}
+          />
+          <InputBox
+            onChange={(value) => 
+              setLastName(value)
+            }
+            label={"Last Name"}
+            placeholder={"Teotia"}
+          />
+          <InputBox
+            onChange={(value) => 
+              setUsername(value)
+            }
+            label={"Email"}
+            placeholder={"prabhat@gmail.com"}
+          />
+          <InputBox
+            onChange={(value) => 
+              setPassword(value)
+            }
+            label={"Password"}
+          />
           <div className="pt-4">
-            <Button onClick={async () => {
-              const response = await axios.post("http://local:3000/api/v1/user/signup", {
-                username,
-                firstName,
-                lastName, 
-                password
-              })
-              localStorage.setItem("token", response.data.token)
-              navigate("/dashboard")
-            }} label={"Sign up"} />
+            <Button
+              onClick={async () => {
+                const response = await axios.post(
+                  "http://localhost:3000/api/v1/user/signup",
+                  {
+                    firstName,
+                    lastName,
+                    username,
+                    password,
+                  }
+                );
+                localStorage.setItem("token", response.data.token);
+                navigate("/dashboard");
+              }}
+              label={"Sign up"}
+            />
           </div>
           <BottomWarning
             label={"Already have an account"}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Button } from "./Button"
+import axios from "axios"
 
 export const Users = () => {
     const  [users, setUsers] = useState([])

@@ -6,6 +6,7 @@ const { authMiddleware } = require("../middleware")
 const jwt = require("jsonwebtoken")
 
 const router = express.Router()
+router.use(express.json())
 
 const signupBody = zod.object({
     username: zod.string().email(),
