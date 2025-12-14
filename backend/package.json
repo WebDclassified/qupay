@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --outDir dist"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "hono": "^4.11.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.1",
     "zod": "^4.1.13"

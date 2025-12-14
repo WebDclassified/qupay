@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/WebDclassified/qupay/issues"
   },
-  "homepage": "https://github.com/WebDclassified/qupay#readme"
+  "homepage": "https://github.com/WebDclassified/qupay#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
 }

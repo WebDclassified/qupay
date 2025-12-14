@@ -1,7 +1,11 @@
+import { Logo } from "./Logo";
+
 export const Appbar = () => {
   return (
     <div className="shadow h-14 flex justify-between">
-      <div className="flex flex-col justify-center h-full ml-4">Qupay</div>
+      <div className="flex ml-4 w-32 h-10 p-4">
+        <Logo/>
+      </div>
       <div className="flex">
         <div className="flex flex-col justify-center h-full mr-4">
             Hello
