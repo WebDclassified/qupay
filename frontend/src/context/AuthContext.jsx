@@ -1,5 +1,7 @@
-import { useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import axios from "axios"
+
+const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null)
@@ -15,7 +17,7 @@ export const AuthProvider = ({children}) => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            setUser(res.data)
+            setUser(res.data.user)
         } catch {
             localStorage.removeItem("token")
             setUser(null)
