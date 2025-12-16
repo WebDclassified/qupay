@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 export const Appbar = () => {
   const { user } = useAuth();
-
+  
   const initials =
     user?.firstName && user?.lastName
       ? `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()

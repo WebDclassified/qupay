@@ -1,4 +1,4 @@
-export const Spending = ({ value }) => {
+export const Saving = ({ value }) => {
   return (
     <div
       className="flex flex-col sm:flex-row
@@ -16,7 +16,7 @@ export const Spending = ({ value }) => {
         text-base sm:text-lg
         mb-1 sm:mb-0"
       >
-        Spending:
+        Savings:
       </div>
       <div
         className=" text-lg sm:text-xl md:text-2xl

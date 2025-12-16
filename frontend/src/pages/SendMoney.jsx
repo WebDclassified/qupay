@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 
 export const SendMoney = () => {
@@ -40,7 +40,8 @@ export const SendMoney = () => {
               />
             </div>
             <button onClick={() => {
-              axios.post(`${API_URL}/api/v1/account/transfer`, {
+              // axios.post(`${API_URL}/api/v1/account/transfer`, {
+              axios.post("http://localhost:3000/api/v1/user/transfer",{
                 to:id,
                 amount
               }, {

@@ -35,8 +35,8 @@ export const Signin = () => {
                 <Button
                   label="Sign in"
                   onClick={async () => {
-                    const res = await axios.post(
-                      `${API_URL}/api/v1/user/signin`,
+                    const res = await axios.post("http://localhost:3000/api/v1/user/signin",
+                      // `${API_URL}/api/v1/user/signin`,
                       {
                         username,
                         password,
