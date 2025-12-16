@@ -9,7 +9,6 @@ export const Appbar = () => {
     user?.firstName && user?.lastName
       ? `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
       : "U";
-      console.log("USER FROM CONTEXT:", user);
 
 
   return (
